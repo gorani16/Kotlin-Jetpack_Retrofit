@@ -2,11 +2,9 @@ package com.gorani.jetpack_retrofit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.create
+import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
+import com.gorani.jetpack_retrofit.viewmodel.MainViewModel
 
 /**
  * Retrofit
@@ -62,58 +60,28 @@ import retrofit2.create
  */
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel : MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val api = RetrofitInstance.getInstance().create(MyApi::class.java)
-        // 1번 작업
-        api.getPost1().enqueue(object : Callback<Post> {
-            override fun onResponse(call: Call<Post>, response: Response<Post>) {
-                Log.d("API_1", response.body().toString())
+        viewModel.getPost1()
+        viewModel.getPost2(3)
 
-                // 2번 작업
-                api.getPostNumber(2).enqueue(object : Callback<Post> {
-                    override fun onResponse(call: Call<Post>, response: Response<Post>) {
-                        Log.d("API_2", response.body().toString())
+        val area1 = findViewById<TextView>(R.id.tv_area_1)
+        val area2 = findViewById<TextView>(R.id.tv_area_2)
+        viewModel.word1.observe(this) {
+            area1.text = it.toString()
+        }
+        viewModel.word2.observe(this) {
+            area2.text = it.toString()
+        }
 
-                        // 3번 작업
-                        api.getPostNumber(3).enqueue(object : Callback<Post> {
-                            override fun onResponse(call: Call<Post>, response: Response<Post>) {
-                                Log.d("API_3", response.body().toString())
 
-                                // 4번 작업
-                                api.getPostNumber(4).enqueue(object : Callback<Post> {
-                                    override fun onResponse(call: Call<Post>, response: Response<Post>) {
-                                        Log.d("API_4", response.body().toString())
-                                    }
-
-                                    override fun onFailure(call: Call<Post>, t: Throwable) {
-                                        Log.d("API_4", "Failed !")
-                                    }
-
-                                })
-                            }
-
-                            override fun onFailure(call: Call<Post>, t: Throwable) {
-                                Log.d("API_3", "Failed !")
-                            }
-
-                        })
-                    }
-
-                    override fun onFailure(call: Call<Post>, t: Throwable) {
-                        Log.d("API_2", "Failed !")
-                    }
-
-                })
-            }
-
-            override fun onFailure(call: Call<Post>, t: Throwable) {
-                Log.d("API_1", "Failed !")
-            }
-
-        })
 
     }
 }

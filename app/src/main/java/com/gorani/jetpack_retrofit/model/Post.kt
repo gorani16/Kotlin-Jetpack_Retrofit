@@ -1,4 +1,4 @@
-package com.gorani.jetpack_retrofit
+package com.gorani.jetpack_retrofit.model
 
 data class Post(
     val userId: String,

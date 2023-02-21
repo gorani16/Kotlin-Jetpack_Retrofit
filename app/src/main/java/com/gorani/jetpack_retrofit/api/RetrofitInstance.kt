@@ -1,4 +1,4 @@
-package com.gorani.jetpack_retrofit
+package com.gorani.jetpack_retrofit.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

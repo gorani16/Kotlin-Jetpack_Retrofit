@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.gorani.jetpack_retrofit.adapter.CustomAdapter
+import com.gorani.jetpack_retrofit.model.Post
 import com.gorani.jetpack_retrofit.viewmodel.MainViewModel
 
 /**
@@ -61,6 +65,14 @@ import com.gorani.jetpack_retrofit.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
+    private val area1: TextView by lazy {
+        findViewById(R.id.tv_area_1)
+    }
+
+    private val rv: RecyclerView by lazy {
+        findViewById(R.id.rv)
+    }
+
     private val viewModel : MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
@@ -71,14 +83,21 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getPost1()
         viewModel.getPost2(3)
+        viewModel.getPostAll()
 
-        val area1 = findViewById<TextView>(R.id.tv_area_1)
         val area2 = findViewById<TextView>(R.id.tv_area_2)
         viewModel.word1.observe(this) {
             area1.text = it.toString()
         }
+
         viewModel.word2.observe(this) {
             area2.text = it.toString()
+        }
+
+        viewModel.wordList.observe(this) {
+            val customAdapter = CustomAdapter(it as ArrayList<Post>)
+            rv.adapter = customAdapter
+            rv.layoutManager = LinearLayoutManager(this)
         }
 
 

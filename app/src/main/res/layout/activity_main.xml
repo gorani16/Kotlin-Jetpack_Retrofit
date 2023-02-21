@@ -14,7 +14,7 @@
         <TextView
             android:id="@+id/tv_area_1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="Area1"
             android:textColor="@color/black"
             android:textSize="50sp" />
@@ -22,10 +22,15 @@
         <TextView
             android:id="@+id/tv_area_2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="Area2"
             android:textColor="@color/black"
             android:textSize="50sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
     </LinearLayout>

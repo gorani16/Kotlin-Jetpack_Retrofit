@@ -9,9 +9,6 @@ import com.gorani.jetpack_retrofit.api.MyApi
 import com.gorani.jetpack_retrofit.api.RetrofitInstance
 import com.gorani.jetpack_retrofit.model.Post
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainViewModel : ViewModel() {
 
@@ -23,6 +20,9 @@ class MainViewModel : ViewModel() {
     private val _word2 = MutableLiveData<String>()
     val word2: LiveData<String> = _word2
 
+    private val _wordList = MutableLiveData<List<Post>>()
+    val wordList: LiveData<List<Post>> = _wordList
+
     fun getPost1() = viewModelScope.launch {
         val post = retrofitInstance.getPost1()
         Log.d("MainViewModel", post.toString())
@@ -33,6 +33,13 @@ class MainViewModel : ViewModel() {
         val post = retrofitInstance.getPostNumber(number)
         Log.d("MainViewModel", post.toString())
         _word2.value = post.title
+    }
+
+    fun getPostAll() = viewModelScope.launch {
+        val postAll = retrofitInstance.getPostAll()
+        Log.d("MainViewModel", postAll.toString())
+        _wordList.value = postAll
+
     }
 
 }

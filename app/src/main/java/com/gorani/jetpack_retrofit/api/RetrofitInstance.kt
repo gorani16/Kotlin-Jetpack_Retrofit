@@ -7,7 +7,7 @@ object RetrofitInstance {
 
     private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
-    val client = Retrofit
+    private val client = Retrofit
         .Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
